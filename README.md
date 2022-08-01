@@ -8,3 +8,4 @@ A basic Python3 Mythic agent using the HTTP C2 profile.  Very extendible
 ## Notes:
 - Lamprey only supports http, not https
 - Lamprey does not support encryption
+- Only use this for ethical, legal purposes, such as education.  This software is not designed or permitted for use in criminal activity of any kind. 
