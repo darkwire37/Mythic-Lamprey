@@ -1,8 +1,8 @@
 # Mythic-Lamprey
 A basic Python3 Mythic agent using the HTTP C2 profile.  Designed to be extended
 ## Usage:
-1) Put the lamprey folder into your `Mythic/Payload_Types` folder
-2) Run `mythic-cli payload add lamprey` to add it to Mythic
+1) Install Mythic from [here](https://github.com/its-a-feature/Mythic)
+2) Run `./mythic-cli install github https://github.com/darkwire37/Mythic-Lamprey` to add it to Mythic
 3) Use the payload
 
 ## Notes:
