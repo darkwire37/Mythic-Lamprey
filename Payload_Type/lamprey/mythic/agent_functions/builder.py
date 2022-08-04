@@ -3,6 +3,7 @@ from mythic_payloadtype_container.MythicCommandBase import *
 from mythic_payloadtype_container.MythicRPC import *
 import sys
 import json
+import base64
 
 #define your payload type class here, it must extend the PayloadType class though
 class Lamprey(PayloadType):
@@ -19,8 +20,13 @@ class Lamprey(PayloadType):
     note = "Should run on anything that runs python3"
     supports_dynamic_loading = False  # setting this to True allows users to only select a subset of commands when generating a payload
     build_parameters = [
-        #  these are all the build parameters that will be presented to the user when creating your payload
-        # we'll leave this blank for now
+       BuildParameter(
+            name="encoding",
+            parameter_type=BuildParameterType.ChooseOne,
+            description="Choose payload encoding",
+            choices=["py", "base64"],
+            default_value="py"
+        ),
     ]
     #  the names of the c2 profiles that your agent supports
     c2_profiles = ["http"]
@@ -42,6 +48,10 @@ class Lamprey(PayloadType):
                             json.dumps(val).replace("false", "False").replace("true","True").replace("null","None"))
                         else:
                             base_code = base_code.replace(key, val)
+        if self.get_parameter("encoding") == "base64":
+            encoded_code = base64.b64encode(base_code.encode())
+            decoder_code = open(self.agent_code_path / "decoder.py", "r").read()
+            base_code = decoder_code.replace("encoded_code",encoded_code.decode())
         resp = BuildResponse(status=BuildStatus.Success)
         resp.payload = base_code.encode()
         return resp
